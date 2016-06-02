@@ -41,14 +41,14 @@ def export_as_csv(admin_model, request, queryset):
             writer.writerow([str(getattr(obj, field)).encode("utf-8", "replace") for field in field_names])
         return response
     return HttpResponseForbidden()
-export_as_csv.short_description = u"Экспортировать выделенные объекты в CSV файл"
+export_as_csv.short_description = u"Экспортировать выбранные подписки в CSV файл"
 
 
 class CSVExportAdmin(admin.ModelAdmin):
     def get_actions(self, request):
         actions = super(CSVExportAdmin, self).get_actions(request)
         if self.has_csv_permission(request):
-            actions['export_as_csv'] = (export_as_csv, 'export_as_csv', u"Экспортировать выделенные объекты в CSV файл")
+            actions['export_as_csv'] = (export_as_csv, 'export_as_csv', u"Экспортировать выбранные подписки в CSV файл")
         return actions
 
     def has_csv_permission(self, request, obj=None):
