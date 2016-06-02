@@ -5,7 +5,7 @@ import django
 from django.conf import settings
 from django.contrib import admin
 from django.http import HttpResponse, HttpResponseForbidden
-from builtins import str as text
+from __builtins__ import str as text
 
 
 def export_as_csv(admin_model, request, queryset):
