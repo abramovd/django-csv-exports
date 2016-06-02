@@ -5,7 +5,6 @@ import django
 from django.conf import settings
 from django.contrib import admin
 from django.http import HttpResponse, HttpResponseForbidden
-from __builtins__ import str as text
 
 
 def export_as_csv(admin_model, request, queryset):
@@ -34,12 +33,12 @@ def export_as_csv(admin_model, request, queryset):
             response = HttpResponse(mimetype='text/csv')
         else:
             response = HttpResponse(content_type='text/csv')
-        response['Content-Disposition'] = 'attachment; filename=%s.csv' % text(opts).replace('.', '_')
+        response['Content-Disposition'] = 'attachment; filename=%s.csv' % str(opts).replace('.', '_')
 
         writer = csv.writer(response)
         writer.writerow(list(field_names))
         for obj in queryset:
-            writer.writerow([text(getattr(obj, field)).encode("utf-8", "replace") for field in field_names])
+            writer.writerow([strgetattr(obj, field)).encode("utf-8", "replace") for field in field_names])
         return response
     return HttpResponseForbidden()
 export_as_csv.short_description = u"Экспортировать выделенные объекты в CSV файл"
